@@ -1,0 +1,38 @@
+{% extends 'country/content_base.html' %}
+
+
+{% block content %}
+    {% for i in photo %}
+    <div class="main-container__content-page">
+        <h1 class="title__section-content">
+           {{i.title}}
+        </h1> 
+        <p class="desc__section-content" style="max-width: 750px;">
+            {{i.description}}
+        </p>
+        {% if i.photo_1 %}
+        <img class='images__content-page'
+        src="{{i.photo_1.url}}" alt="" />
+        {% endif %}
+        {% if i.photo_2 %}
+        <img class='images__content-page'
+        src="{{i.photo_2.url}}" alt="" />
+        {% endif %}
+        {% if i.photo_3 %}
+        <img class='images__content-page'
+        src="{{i.photo_3.url}}" alt="" />
+        {% endif %}
+        {% if i.photo_4 %}
+        <img class='images__content-page'
+        src="{{i.photo_4.url}}" alt="" />
+        {% endif %}
+        {% if i.photo_5 %}
+        <img class='images__content-page'
+        src="{{i.photo_5.url}}" alt="" />
+        {% endif %}
+        {% if i.photo_6 %}
+        <img class='images__content-page'
+        src="{{i.photo_6.url}}" alt="" />
+        {% endif %}
+    {% endfor %}
+{% endblock %}

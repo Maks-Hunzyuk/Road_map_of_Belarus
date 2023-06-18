@@ -1,0 +1,31 @@
+{% extends 'country/base.html' %}
+
+{%block content %}
+<div class='site-desc'>
+    <h1>#События</h1>
+</div>
+            
+    <div class="regions">
+        {% for event in events %}
+        <div class='container__item-card'>
+            <a href="{% url 'show_event' event.pk %}" class='link__item-card'>
+                <div class="container-desc__item-card">
+                    <img class='img__item-card'
+                        src="{{ event.photo.url }}"
+                        alt="" />
+                    <div class="overlay__item-card">
+                        <h2>{{ event.title }}</h2>
+                        <span>{{ event.short_description}}</span>
+                    </div>
+                </div>
+                <div class='container-info__item-card'>
+                    <h1>События</h1>
+                </div>
+            </a>
+        
+        </div>
+        {% endfor %}
+    </div>
+
+        
+{% endblock %}

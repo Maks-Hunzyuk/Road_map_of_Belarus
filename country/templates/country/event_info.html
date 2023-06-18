@@ -1,0 +1,26 @@
+{% extends 'country/content_base.html' %}
+
+
+{% block content %}
+    {% for e in event %}
+        <div class="main-container__content-page">
+            <h1 class="title__section-content">
+            {{e.title}}
+            </h1> 
+            <img class='images__content-page'
+            src="{{ e.photo.url }}" alt="" />
+            <p class="desc__section-content" style="max-width: 750px;">
+                Место проведения: {{e.where}}
+            </p>
+            <p class="desc__section-content" style="max-width: 750px;">
+                Стоймость: {{e.price}}
+            </p>
+            <p class="desc__section-content" style="max-width: 750px;">
+                Время проведения: {{e.date}}
+            </p>
+            <p class="desc__section-content" style="max-width: 750px;">
+                {{e.description}}
+            </p>
+            
+    {% endfor %}
+{% endblock %}

@@ -1,0 +1,138 @@
+{% load static %}
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'country/css/style.css' %}">
+    <title>{{city.title}}</title>
+</head>
+
+<body>
+    <div class="App">
+        <header class='header' id="header">   
+            <div class='hidden' id="authWindow">
+            </div>
+            <!-- Меню header -->
+            <nav class='container-items__header'>
+                <h1 class='logo__header'>Road map of Belarus!</h1>
+                <ul class="list__header">
+                    <a href="{% url 'home' %}">
+                        <li class="menu__header">Главная</li>
+                    </a>
+                    <a href="{% url 'show_routers' %}">
+                        <li class="menu__header">Маршруты</li>
+                    </a>
+                    <a href="{% url 'events_list' %}">
+                        <li class="menu__header">События</li>
+                    </a>
+                    <a href="{% url 'photos' %}">
+                        <li class="menu__header">Фото</li>
+                    </a>
+                    {% if request.user.is_authenticated %}
+                        <a href="{% url 'logout' %}">
+                            <li class="menu__header" id="btnAuthWindow">Выход</li>
+                        </a>
+                    {% else %}  
+                        <a href="{% url 'login' %}">
+                            <li class="menu__header" id="btnAuthWindow">Вход</li>
+                        </a>
+                    {% endif %}   
+                </ul>  
+            </nav>
+        </header>
+        <main class='container'>
+            <div class='container__content-page'>
+                <div class='desc__content-page'>
+                    <h1>{{city.title}}</h1>
+                    <div class="container-desc__content-page">
+                        <img class='images__content-page' src="{{ city.photo_1.url }}"
+                        alt="" />
+                        <p>{{ city.discription }}</p>
+                    </div>
+                    <div class="container-section-scroll">
+                        <h1 class='title-scroll'>Содержание гайда:</h1>
+                        <ul class="list-scroll">
+                            <li id="scrollBtn" class="item-scroll">Транспорт</li>
+                            <li id="scrollBtn" class="item-scroll">Жилье</li>
+                            <li id="scrollBtn" class="item-scroll">Культурная программа</li>
+                            <li id="scrollBtn" class="item-scroll">Кафе / Рестораны / Тусовки</li>   
+                        </ul>
+                    </div>
+                </div>
+                    <div class="main-container__content-page">
+                    <img class='images__content-page'
+                        src="{{city.photo_2.url}}" alt="" />
+                    <img class='images__content-page'
+                        src="{{city.photo_3.url}}" alt="" />
+                    <div class="section-content">
+                        <img id="imgSection" class='section-content__image'
+                            src="https://34travel.me/media/upload/images/2015/icons_guide/transport-rus.png" alt="" />
+                        <div class="container__section-content">
+                            {% for t in transport %}
+                                <p class="desc__section-content">{{t.discription}}</p>
+                            {% endfor %}
+                        </div>
+                        <img class='images__content-page'
+                        src="{{city.photo_3.url}}" alt="" />
+                        <img class='images__content-page'
+                        src="{{city.photo_4.url}}" alt="" />
+                    </div>
+                    <div class="section-content">
+                        <img id="imgSection" class='section-content__image'
+                            src="https://34travel.me/media/upload/images/2015/icons_guide/lodging-rus.png" alt="" />
+                        <div class="container__section-content">
+                                {% for h in hotel %}
+                                    <h1 class="title__section-content">{{ h.title}}</h1>
+                                    <p class="desc__section-content">{{ h.discription}}</p>
+                                {% endfor %}
+                        </div>
+                        <img class='images__content-page'
+                        src="{{city.photo_5.url}}" alt="" />
+                        <img class='images__content-page'
+                        src="{{city.photo_6.url}}" alt="" />
+                    </div>
+                    <div class="section-content">
+                        <img id="imgSection" class='section-content__image'
+                            src="https://34travel.me/media/upload/images/2015/icons_guide/culture-rus.png" alt="" />
+                        <div class="container__section-content">
+                            {% for c in cultural_objects %}
+                                <h1 class="title__section-content">{{ c.title }}</h1>
+                                <p class="desc__section-content">{{c.discription}}</p>
+                            {% endfor %}
+                        </div>
+                        <img class='images__content-page'
+                        src="{{city.photo_7.url}}" alt="" />
+                        <img class='images__content-page'
+                        src="{{city.photo_8.url}}" alt="" />
+                    </div>
+                    <div class="section-content">
+                        <img id="imgSection" class='section-content__image'
+                            src="https://34travel.me/media/upload/images/2015/icons_guide/cafe-razvl.png" alt="" />
+                        <div class="container__section-content">
+                            {% for f in food %}
+                                <h1 class="title__section-content">{{ f.title }}</h1>
+                                <p class="desc__section-content">{{ f.discription }}</p>
+                            {% endfor %}
+                        </div>
+                        <img class='images__content-page'
+                        src="{{city.photo_9.url}}" alt="" />
+                        <img class='images__content-page'
+                        src="{{city.photo_10.url}}" alt="" />
+                    </div>
+                        {% comment %} {% include 'country/comments.html' %} {% endcomment %}
+                </div>
+            </div>
+        </main>
+        <div class="scrollUp__content-page" id="scrollUp">
+            <div class="scrollUp-arrow">↑</div>
+        </div>
+        <footer class='footer'></footer>
+    </div>
+    <script src="{% static 'country/js/script.js' %}"></script>
+</body>
+
+</html>

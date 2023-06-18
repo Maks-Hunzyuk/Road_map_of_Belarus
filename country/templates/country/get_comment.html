@@ -1,0 +1,38 @@
+{% load static %}
+
+
+<!DOCTYPE html>
+<html lang="ru">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="{% static 'country/css/style.css' %}">
+    <title>{{city.title}}</title>
+</head>
+<body>
+<div class="section__comment">
+    <ol class="comments-tree-list">
+        {% for comm in get_comment %}
+        <li class="comments-tree-item">
+            <div class="comment-item">
+                <div class="comment-item__header">
+                    <img class="comment-item__img"
+                        src="https://www.kindpng.com/picc/m/22-223863_no-avatar-png-circle-transparent-png.png"
+                        alt="avatar">
+                    <div class="comment-item__user">
+                        <div class="comment-item__name"> {{ comm.name }}</div>
+                        <div class="comment-item__data">{{ comm.created }}</div>
+                    </div>
+                </div>
+                <div class="comment-item__main">
+                    {{ comm.body }}
+                </div>
+            </div>
+        </li>
+        {% endfor %}
+    </ol>
+</div>
+<script src="{% static 'country/js/script.js' %}"></script>
+</body>

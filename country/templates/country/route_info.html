@@ -1,0 +1,26 @@
+{% extends 'country/content_base.html' %}
+
+{% block content %}
+    <div class="main-container__content-page">
+        <h1 class="title__section-content">
+           {{desc.title}}
+        </h1> 
+        <p class="desc__section-content" style="max-width: 750px;">
+            {{desc.description}}
+        </p>
+    </div>
+    {% for r in route %}
+    <div class="main-container__content-page">
+        <h1 class="title__section-content">
+           {{r.title}}
+        </h1> 
+        <p class="desc__section-content" style="max-width: 750px;">
+            {{r.stopping_points_desc}}
+        </p>
+        {% if r.photo_1 %}
+        <img class='images__content-page'
+        src="{{r.photo_1.url}}" alt="" />
+        {% endif %}
+    </div>
+    {% endfor %}
+{% endblock %}

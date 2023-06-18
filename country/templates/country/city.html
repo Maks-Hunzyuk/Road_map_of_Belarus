@@ -1,0 +1,13 @@
+{% extends 'country/content_base.html' %}
+
+{% block content %}
+<div class='desc__content-page'>
+    <h1>{{city.title}}</h1>
+    <img class='images__content-page' src="{{ city.photo_1.url }}"
+        alt="" />
+    <p>{{ city.discription }}</p>
+</div>
+    
+
+{% endblock %}
+

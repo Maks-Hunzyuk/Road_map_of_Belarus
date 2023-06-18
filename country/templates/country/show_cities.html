@@ -1,0 +1,30 @@
+{% extends 'country/base.html' %}
+
+<!-- {% block header %}
+{% endblock %} -->
+
+{%block content %}
+    
+    <div class="regions">
+        {% for city in cities %}
+        <div class='container__item-card'>
+            <a href="{% url 'city_info' city.pk %}" class='link__item-card'>
+                <div class="container-desc__item-card">
+                    <img class='img__item-card'
+                        src="{{ city.photo_1.url }}"
+                        alt="" />
+                    <div class="overlay__item-card">
+                        <h2>{{ city.title }}</h2>
+                        <span>{{ city.short_discription }}</span>
+                    </div>
+                </div>
+                <div class='container-info__item-card'>
+                    <h1>{{ city.title }}</h1>
+                </div>
+            </a>
+        
+        </div>
+        {% endfor %}
+    </div>
+
+{% endblock %}
