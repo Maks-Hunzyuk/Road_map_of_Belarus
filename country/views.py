@@ -68,23 +68,20 @@ def show_city_info(request, city_id):
     try:
         city_info = Cities.objects.all()
         city = Cities.objects.get(pk=city_id)
-        comm = city.comments.all()
         transport = city.transport_set.all()
         hotels = city.hotels_set.all()
         culturalobjects = city.culturalobjects_set.all()
         food = city.food_set.all()
         shopping = city.shopping_set.all()
         context = {
-                    'city': city,
-                    'transport': transport,
-                    'hotel': hotels,
-                    'cultural_objects': culturalobjects,
-                    'food': food, 
-                    'shopping': shopping,
-                    'city_info': city_info,
-                    'commetns': comm
-
-                }
+                'city': city,
+                'transport': transport,
+                'hotel': hotels,
+                'cultural_objects': culturalobjects,
+                'food': food, 
+                'shopping': shopping,
+                'city_info': city_info,
+                    }
         return render(request, 'country/content_city.html', context)
     except:
         return HttpResponseNotFound("Page not found")
@@ -171,17 +168,13 @@ def logout_user(request):
 
 
 def add_comments(request):
+    comments = Comment.objects.filter(active=True)
     if request.method == "POST":
-        comment_form = CommentForm(request.POST)
-        if comment_form.is_valid():
-            new_comments = comment_form.save(commit=False)
-            post_id = request.POST.get('post_id')
-            post = Cities.objects.get(id=post_id)
-            new_comments.post = post
-            new_comments.save()
-        else:
-            comment_form = CommentForm()
+        form = CommentForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return render(request, 'country/comments.html', {})
     else:
-        comment_form = CommentForm()
-    return render(request, 'country/comments.html', {'comments_form':comment_form})
-
+        form = CommentForm()
+   
+    return render(request, 'country/comments.html', {'comments':comments, 'form':form})

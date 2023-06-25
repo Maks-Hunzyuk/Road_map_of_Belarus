@@ -221,15 +221,13 @@ class PhotosDiscriptions(models.Model):
 
 
 class Comment(models.Model):
-    post = models.ForeignKey(Cities, on_delete=models.CASCADE, related_name='comments')
-    name = models.CharField(max_length=80)
-    body = models.TextField()
-    created = models.DateTimeField(auto_now_add=True)
-    updated = models.DateTimeField(auto_now=True)
-    active = models.BooleanField(default=True)
+    name = models.CharField(max_length=80, verbose_name="Автор")
+    body = models.TextField(verbose_name="Текст комментария")
+    created = models.DateTimeField(auto_now_add=True, db_index=True, verbose_name='Опубликован')
+    active = models.BooleanField(default=True, db_index=True, verbose_name='Выводить на экран?')
 
     class Meta:
+        verbose_name_plural = "Комментарии"
+        verbose_name = "Комментарий"
         ordering = ('created',)
-
-    def __str__(self):
-        return 'Comment by {} on {}'.format(self.name, self.post)
+        

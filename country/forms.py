@@ -25,14 +25,10 @@ class LoginForm(forms.Form):
     password = forms.CharField()
 
 
-class CommentForm(forms.Form):    
+class CommentForm(forms.ModelForm): 
     class Meta:
         model = Comment
-        fields = ('name', 'body')
-        widgets = {
-            'name': forms.TextInput(),
-            'body' : forms.TextInput()
-        }
+        fields = ('body',)
  
 
 

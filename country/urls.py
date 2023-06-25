@@ -15,7 +15,6 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('comments/', views.add_comments),
-    # path('get_comment/int<id:comm_id>/', views.get_comment, name='get_comment')
     
 ]
 

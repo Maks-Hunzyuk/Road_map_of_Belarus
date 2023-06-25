@@ -14,10 +14,11 @@
 <body>
     <div class="section__comment">
         <h1>Коментарии</h1>
-        <form class="section__comment-form" method="post" action=".">
+        <form class="section__comment-form" method="post" action='{% url 'home' %}'>
             {% csrf_token %}
             <div class="form__row">
-                {{comments_form.as_p}}
+            {{form.body}}
+            </div>
             <div class="form__row">
                 <button type='submit'>Добавить комментарий</button>
             </div>
