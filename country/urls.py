@@ -1,8 +1,10 @@
 from country import views
-from django.urls import include, path
+from django.urls import path
+
+app_name = 'country'
 
 urlpatterns = [
-    path('', views.home, name='home'), 
+    path('', views.IndexView.as_view(), name='home'),
     path('show_cities/<int:region_id>', views.show_cities, name='show_cities'),
     path('show_routers/', views.show_routers, name='show_routers'),
     path('list_events/', views.events_list, name="events_list"),
@@ -15,6 +17,5 @@ urlpatterns = [
     path('login/', views.user_login, name='login'),
     path('logout/', views.logout_user, name='logout'),
     path('comments/', views.add_comments),
-    
-]
 
+]

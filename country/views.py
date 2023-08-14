@@ -1,23 +1,20 @@
-
-from django.http import HttpResponse
-from django.shortcuts import get_object_or_404, render, redirect
-from .models import *
-from .forms import UserRegistrationForm, LoginForm, CommentForm
+from common.views import TitleMixin
 from django.contrib.auth import authenticate, login, logout
-from django.http import HttpResponseNotFound
-from django.core.exceptions import ObjectDoesNotExist
-from django.contrib.auth.decorators import login_required
-from django.views.decorators.http import require_http_methods
-from django.contrib import auth
+from django.http import HttpResponse, HttpResponseNotFound
+from django.shortcuts import redirect, render
+from django.views.generic.base import TemplateView
+
+from .forms import CommentForm, LoginForm, UserRegistrationForm
+from .models import (
+    Region, Routers, Cities, Comment, Events, Photos,
+
+)
 
 
-def home(request):
-    """Отображение главное страницы"""
-    try:
-        return render(request, "country/home.html")
-    except:
-        return HttpResponseNotFound
-
+class IndexView(TitleMixin, TemplateView):
+    """The class is responsible for displaying the main page"""
+    template_name = 'country/home.html'
+    title = 'Belarus'
 
 
 def show_cities(request, region_id):
@@ -29,17 +26,17 @@ def show_cities(request, region_id):
             'cities': cities,
         }
         return render(request, "country/show_cities.html", context=context)
-    except:
-        return HttpResponseNotFound("Page not found")
+    except HttpResponseNotFound():
+        return HttpResponseNotFound('Page not found')
 
 
 def show_routers(request):
     """список маршрутов"""
     try:
         routers = Routers.objects.all()
-        context = {'routers':routers}
+        context = {'routers': routers}
         return render(request, "country/routers.html", context=context)
-    except:
+    except HttpResponseNotFound():
         return HttpResponseNotFound("Page not found")
 
 
@@ -47,9 +44,9 @@ def events_list(request):
     """список событий"""
     try:
         event = Events.objects.all()
-        context = {'events':event}
+        context = {'events': event}
         return render(request, "country/events_list.html", context=context)
-    except:
+    except HttpResponseNotFound():
         return HttpResponseNotFound("Page not found")
 
 
@@ -57,9 +54,9 @@ def show_photos(request):
     """списко рубрики фото"""
     try:
         posts = Photos.objects.all()
-        context = {'posts':posts}
+        context = {'posts': posts}
         return render(request, 'country/photos.html', context)
-    except:
+    except HttpResponseNotFound():
         return HttpResponseNotFound("Page not found")
 
 
@@ -78,12 +75,12 @@ def show_city_info(request, city_id):
                 'transport': transport,
                 'hotel': hotels,
                 'cultural_objects': culturalobjects,
-                'food': food, 
+                'food': food,
                 'shopping': shopping,
                 'city_info': city_info,
                     }
         return render(request, 'country/content_city.html', context)
-    except:
+    except HttpResponseNotFound():
         return HttpResponseNotFound("Page not found")
 
 
@@ -94,11 +91,11 @@ def show_route(request, route_id):
         route = Routers.objects.get(pk=route_id)
         router = route.routers.all()
         context = {
-            'route':router,
+            'route': router,
             'desc': route_desc
         }
         return render(request, 'country/route_info.html', context=context)
-    except:
+    except HttpResponseNotFound():
         return HttpResponseNotFound("Page not found")
 
 
@@ -108,11 +105,10 @@ def show_event(request, event_id):
         events = Events.objects.get(pk=event_id)
         event = events.events.all()
         context = {
-            'event':event,
-        
+            'event': event,
         }
         return render(request, 'country/event_info.html', context=context)
-    except:
+    except HttpResponseNotFound():
         return HttpResponseNotFound("Page not found")
 
 
@@ -124,10 +120,9 @@ def show_photos_info(request, photo_id):
 
         context = {
             'photo': photo,
-        
         }
         return render(request, 'country/photos_info.html', context=context)
-    except:
+    except HttpResponseNotFound():
         return HttpResponseNotFound("Page not found")
 
 
@@ -140,7 +135,7 @@ def register(request):
             new_user = form.save(commit=False)
             new_user.save()
             return render(request, 'country/register.html', {'new_user': new_user})
-    else: 
+    else:
         form = UserRegistrationForm()
         context['form'] = form
     return render(request, 'country/register.html', context)
@@ -157,10 +152,11 @@ def user_login(request):
                 login(request, user)
                 return redirect('home')
             else:
-                return HttpResponse('Неверный логин или пароль')        
+                return HttpResponse('Неверный логин или пароль')
     else:
         forms = LoginForm()
     return render(request, 'country/login.html', {'form': forms})
+
 
 def logout_user(request):
     logout(request)
@@ -176,5 +172,5 @@ def add_comments(request):
             return render(request, 'country/comments.html', {})
     else:
         form = CommentForm()
-   
-    return render(request, 'country/comments.html', {'comments':comments, 'form':form})
+
+    return render(request, 'country/comments.html', {'comments': comments, 'form': form})

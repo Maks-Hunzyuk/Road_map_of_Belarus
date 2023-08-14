@@ -1,7 +1,8 @@
 from django import forms
-from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
-from .models import Cities, Events, Routers, Comment
+from django.contrib.auth.models import User
+
+from .models import Comment
 
 
 class UserRegistrationForm(UserCreationForm):
@@ -18,17 +19,14 @@ class UserRegistrationForm(UserCreationForm):
         if cd['password1'] != cd['password2']:
             raise forms.ValidationError("Password don't match")
         return cd['password2']
-    
+
 
 class LoginForm(forms.Form):
     username = forms.CharField()
     password = forms.CharField()
 
 
-class CommentForm(forms.ModelForm): 
+class CommentForm(forms.ModelForm):
     class Meta:
         model = Comment
         fields = ('body',)
- 
-
-

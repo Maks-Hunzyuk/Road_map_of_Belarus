@@ -1,5 +1,9 @@
 from django.contrib import admin
-from .models import *
+
+from .models import (Region, Cities, RouteDetails, Routers, Transport,
+                     Hotels, CulturalObjects, Food, Shopping, Events,
+                     Events_ditails, Photos, PhotosDiscriptions, Comment
+                     )
 
 # Register your models here.
 
@@ -17,4 +21,3 @@ admin.site.register(Events_ditails)
 admin.site.register(Photos)
 admin.site.register(PhotosDiscriptions)
 admin.site.register(Comment)
-
