@@ -8,7 +8,7 @@
     <div class="regions">
         {% for city in cities %}
         <div class='container__item-card'>
-            <a href="{% url 'city_info' city.pk %}" class='link__item-card'>
+            <a href="{% url 'country:city_info' city.pk %}" class='link__item-card'>
                 <div class="container-desc__item-card">
                     <img class='img__item-card'
                         src="{{ city.photo_1.url }}"

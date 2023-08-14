@@ -1,9 +1,10 @@
-from common.views import TitleMixin
 from django.contrib.auth import authenticate, login, logout
 from django.http import HttpResponse, HttpResponseNotFound
 from django.shortcuts import redirect, render
 from django.views.generic.base import TemplateView
+from django.views.generic.list import ListView
 
+from common.views import TitleMixin
 from .forms import CommentForm, LoginForm, UserRegistrationForm
 from .models import (
     Region, Routers, Cities, Comment, Events, Photos,
@@ -17,17 +18,21 @@ class IndexView(TitleMixin, TemplateView):
     title = 'Belarus'
 
 
-def show_cities(request, region_id):
-    """Отображение списка городов по областям"""
-    try:
-        region = Region.objects.get(pk=region_id)
+class CityListView(TitleMixin, ListView):
+
+    """The class is responsible for filtering and displaying the cities of the regions"""
+
+    template_name = 'country/show_cities.html'
+    model = Region
+    title = 'Cities'
+
+    def get_context_data(self, **kwargs):
+        region = Region.objects.get(pk=self.kwargs['region_id'])
         cities = region.cities_set.all()
         context = {
             'cities': cities,
         }
-        return render(request, "country/show_cities.html", context=context)
-    except HttpResponseNotFound():
-        return HttpResponseNotFound('Page not found')
+        return context
 
 
 def show_routers(request):

@@ -5,7 +5,7 @@ app_name = 'country'
 
 urlpatterns = [
     path('', views.IndexView.as_view(), name='home'),
-    path('show_cities/<int:region_id>', views.show_cities, name='show_cities'),
+    path('show_cities/<int:region_id>', views.CityListView.as_view(), name='show_cities'),
     path('show_routers/', views.show_routers, name='show_routers'),
     path('list_events/', views.events_list, name="events_list"),
     path('photos/', views.show_photos, name='photos'),
